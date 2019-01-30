@@ -1,0 +1,19 @@
+version: '{build}'
+
+environment:
+
+  matrix:
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+    VCVARS_SCRIPT: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat"
+    VCVARS_PLATFORM: x86
+
+init:
+
+  - cmd: '"%VCVARS_SCRIPT%" %VCVARS_PLATFORM%'
+
+build_script:
+
+  - cmd: |
+      sed -i -- 's/C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin/C:\\mingw-w64\\x86_64-7.2.0-posix-seh-rt_v5-rev1\\bin/g' Directory.Build.props
+      msbuild
